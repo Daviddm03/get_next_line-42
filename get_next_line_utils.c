@@ -36,19 +36,6 @@ char	*ft_strchr(const char *str, int c)
 	return ((char *)&str[i]);
 }
 
-/* char	*ft_strchr(const char *s, int c)
-{
-	while (*s)
-	{
-		if (*s == (char)c)
-			return ((char *)s);
-		s++;
-	}
-	if (*s == (char)c)
-		return ((char *)s);
-	return (NULL);
-} */
-
 char	*ft_strdup(const char *s)
 {
 	char	*new;
