@@ -106,7 +106,7 @@ char	*get_next_line(int fd)
 		line = ft_strdup("");
 	line = read_update(fd, line);
 	if (!line || line[0] == '\0')
-		return (NULL);
+		return (free(line), line = NULL, NULL);
 	rd = get_line(line);
 	line = new_line(line);
 	return (rd);
