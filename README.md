@@ -1,23 +1,92 @@
-# get_next_line-42📃
-<h3>What is get_next_line⁉️</h3>
-The objective is to create a function that reads a line ending with a newline character from a file descriptor. This function enables reading from multiple file descriptors concurrently using a single file descriptor.
+# get_next_line
 
-<h3>Key points🔑</h3>
+An implementation of a function that reads and returns one line at a time from a file descriptor.
 
-**File Descriptor Management**
-- Manages reading from multiple file descriptors using a single descriptor.
+The project was developed as part of the 42 curriculum and focuses on file descriptors, static variables, memory management, and buffered input.
 
-**Buffer Management**
-- Efficiently handles input by managing a static buffer for partial reads.
+## About
 
-**Dynamic Memory Allocation**
-- Allocates memory dynamically to store the read line, ensuring flexibility.
+The main function is:
 
-**Error Management**
-- Handles errors gracefully to ensure robust operation across different scenarios.
+```c
+char *get_next_line(int fd);
+```
 
-**Managing Memory Leaks**
-- One of the critical challenges students face is the proper management of dynamically allocated memory, especially when dealing with reading from files and temporary storage buffers.
+Each call returns the next available line from the given file descriptor.
 
-<h3>Conclusion🙏</h3>
-The get_next_line project is pivotal for students to grasp advanced file handling techniques in C. It enhances their understanding of managing input streams, memory allocation, and error handling, crucial skills applicable to broader programming challenges. This project equips students with the ability to write efficient, scalable code while managing complex input scenarios effectively.
+The repository also contains a bonus implementation designed to support multiple file descriptors.
+
+The buffer size can be changed at compile time using the `BUFFER_SIZE` macro.
+
+## Getting Started
+
+### Requirements
+
+- GCC or Clang
+- A Unix-like environment
+
+Clone the repository:
+
+```bash
+git clone git@github.com:Daviddm03/get_next_line-42.git
+cd get_next_line-42
+```
+
+Create a simple `main.c`:
+
+```c
+#include "get_next_line.h"
+#include <fcntl.h>
+#include <stdio.h>
+
+int main(void)
+{
+    int     fd;
+    char    *line;
+
+    fd = open("example.txt", O_RDONLY);
+    while ((line = get_next_line(fd)) != NULL)
+    {
+        printf("%s", line);
+        free(line);
+    }
+    close(fd);
+    return (0);
+}
+```
+
+Compile:
+
+```bash
+cc -Wall -Wextra -Werror \
+    get_next_line.c \
+    get_next_line_utils.c \
+    main.c \
+    -o gnl
+```
+
+Run:
+
+```bash
+./gnl
+```
+
+A custom buffer size can be defined during compilation:
+
+```bash
+cc -Wall -Wextra -Werror -D BUFFER_SIZE=100 \
+    get_next_line.c \
+    get_next_line_utils.c \
+    main.c \
+    -o gnl
+```
+
+## What I Learned
+
+This project helped me understand how buffered reading works and how data can persist between function calls using static variables.
+
+It also required careful memory management because the function needs to preserve unread data while returning each completed line independently.
+
+## Tech
+
+C · File Descriptors · Static Variables · Memory Management
